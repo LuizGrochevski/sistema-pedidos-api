@@ -21,7 +21,7 @@ public class DataLoader {
             productService.save(new Product(103, "Headphones", 300.0));
         
             if(userRepository.findByEmailOrName("luiz@email.com", "luiz").isEmpty()){
-                userRepository.save(new User(1, "luiz", "luiz.@email.com", passwordEncoder.encode("123")));
+                userRepository.save(new User(1, "luiz", "luiz@email.com", passwordEncoder.encode("123")));
             }
         
         };

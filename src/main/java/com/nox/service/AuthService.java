@@ -13,15 +13,17 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     public Optional<String> authenticate(String usernameOrEmail, String rawPassword) {
         return userRepository.findByEmailOrName(usernameOrEmail, usernameOrEmail)
                 .filter(user -> passwordEncoder.matches(rawPassword, user.getPasswordHash()))
-                .map(user -> JwtUtil.generateToken(user.getEmail()));
+                .map(user -> jwtUtil.generateToken(user.getEmail()));
     }
 }
